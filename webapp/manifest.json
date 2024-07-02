@@ -1,0 +1,222 @@
+{
+    "_version": "1.48.0",
+    "sap.app": {
+        "id": "com.rs.cf.grpldevicemaintenance",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:lrop",
+            "version": "1.9.1",
+            "toolsId": "6f2d4007-ed0e-4d22-8fc6-bc672a632bc0"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZCS_UI_GRPL_O2/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "ZCS_UI_GRPL_O2_VAN",
+                        "annotation"
+                    ],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "ZCS_UI_GRPL_O2_VAN": {
+                "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZCS_UI_GRPL_O2_VAN',Version='0001')/$value/",
+                "type": "ODataAnnotation",
+                "settings": {
+                    "localUri": "localService/ZCS_UI_GRPL_O2_VAN.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "com-rs-cf-grpldevicemaintenance-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "grpldevicemaintenance",
+                    "action": "display",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": "sap-icon://BusinessSuiteInAppSymbols/icon-products",
+                    "indicatorDataSource": {
+                        "dataSource": "mainService",
+                        "path": "Device/$count",
+                        "refresh": 600
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.108.7",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ushell": {},
+                "sap.f": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.suite.ui.generic.template": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.rs.cf.grpldevicemaintenance.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "metadataUrlParams": {
+                        "sap-value-list": "none"
+                    }
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "config": {},
+            "routes": [],
+            "targets": {}
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {
+                    "sap.suite.ui.generic.template.ListReport.view.ListReport": {
+                        "controllerName": "com.rs.cf.grpldevicemaintenance.ext.controller.ListReportExt",
+                        "sap.ui.generic.app": {
+                            "ServiceDocument": {
+                                "EntitySet": "Device",
+                                "Actions": {}
+                            }
+                        }
+                    },
+                    "sap.suite.ui.generic.template.ObjectPage.view.Details": {
+                        "controllerName": "com.rs.cf.grpldevicemaintenance.ext.controller.ObjectPageExt",
+                        "sap.ui.generic.app": {
+                            "Device": {
+                                "EntitySet": "Device",
+                                "Header": {
+                                    "Actions": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui.generic.app": {
+        "_version": "1.3.0",
+        "settings": {
+            "forceGlobalRefresh": false,
+            "objectPageHeaderType": "Dynamic",
+            "considerAnalyticalParameters": true,
+            "showDraftToggle": false
+        },
+        "pages": {
+            "ListReport|Device": {
+                "entitySet": "Device",
+                "component": {
+                    "name": "sap.suite.ui.generic.template.ListReport",
+                    "list": true,
+                    "settings": {
+                        "condensedTableLayout": true,
+                        "smartVariantManagement": true,
+                        "enableTableFilterInPageVariant": true,
+                        "dataLoadSettings": {
+                            "loadDataOnAppLaunch": "always"
+                        },
+                        "filterSettings": {
+                            "dateSettings": {
+                                "useDateRange": true
+                            }
+                        },
+                        "tableSettings": {
+                            "type": "GridTable",
+                            "multiSelect": true
+                        }
+                    }
+                },
+                "pages": {
+                    "ObjectPage|Device": {
+                        "entitySet": "Device",
+                        "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
+                        "component": {
+                            "name": "sap.suite.ui.generic.template.ObjectPage"
+                        },
+                        "pages": {
+                            "ObjectPage|to_DeviceConfig": {
+                                "navigationProperty": "to_DeviceConfig",
+                                "entitySet": "DeviceConfiguration",
+                                "defaultLayoutTypeIfExternalNavigation": "MidColumnFullScreen",
+                                "component": {
+                                    "name": "sap.suite.ui.generic.template.ObjectPage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "comrscfgrpldevicemaintenance"
+    }
+}
